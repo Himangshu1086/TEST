@@ -1,0 +1,94 @@
+body {
+    padding: 0%;
+    margin: 0;
+}
+.red_absolute{
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    border-radius: 5px;
+    margin: 10px;
+    position: absolute;
+    right: 0%;
+    top: 0%;
+}
+.yellow{
+    width: 50px;
+    height: 50px;
+    background-color: yellow;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.red_fixed{
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    border-radius: 5px;
+    margin: 10px;
+    position: fixed;
+    right: 50%;
+    top: 0%;
+}
+
+.red_relative{
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    border-radius: 5px;
+    margin: 10px;
+    position: relative;
+    left: 40px;
+    top: 0%;
+}
+
+.red_sticky{
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    border-radius: 5px;
+    margin: 10px;
+    position: sticky;
+}
+.full_box{
+    display: flex;
+    width: 100%;
+    margin: 0;
+    padding: 0%;
+}
+
+.sidebar{
+    background-color: rgb(9, 32, 53);
+    margin: 0%;
+    width: 20%;
+    height: 1500px;
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+.upper-box{
+    padding: 5px;
+    font-size: 20px;
+}
+.upper-box > ul{
+    list-style: none;
+}
+
+.upper-box > ul > li {
+    padding: 5px;
+}
+
+.lower-box{
+    padding: 5px;
+    font-size: 20px;
+    position: absolute;
+    bottom: 0%;
+}
+.lower-box > ul{
+    list-style: none;
+}
+
+.lower-box > ul > li {
+    padding: 5px;
+}

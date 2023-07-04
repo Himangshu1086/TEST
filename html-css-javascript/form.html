@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+</head>
+<body>
+    <div style="margin: 40px;">
+        <h1>Register</h1>
+        <form action="https://formsubmit.co/baishyahimangshu499@gmail.com" method="POST" style="display:flex;flex-direction:column;justify-content: space-evenly; width: 30%;height: 300px;">
+            
+            <label id="First_name">First Name: </label>
+            <input for="First_name" name="First_name" type="text" placeholder="John" required/>
+            <label id="Last_name">Last Name: </label>
+            <input for="Last_name" name="Last_name" type="text" placeholder="Smith" required/>
+
+            <div>
+                <input type="radio" id="Male" name="gender" value="Male" required>
+                <label for="Male">Male</label>
+                <input type="radio" id="Female" name="gender" value="Female" required>
+                <label for="Male">Female</label>
+                <input type="radio" id="Other" name="gender" value="Other" required>
+                <label for="Other">Male</label>
+            </div>
+
+            <div>
+                <label id="Email">Email: </label>
+            <input for="Email" name="Email" type="email" placeholder="your email" required/>
+
+            <label id="password">Password: </label>
+            <input for="password" name="Password" placeholder="your password" type="password" required/>
+            </div>
+
+            <div>
+                <label for="birthday">Birthday:</label>
+            <input type="date" id="birthday" name="birthday" required >
+            </div>
+            <div>
+                <input for="sign" type="checkbox" required/>
+                <label id="sign">I agree to the terms and conditions</label>
+            </div>
+            <input style="width: 100px;" type="submit"/>
+        </form>
+    </div>
+</body>
+</html>
