@@ -375,3 +375,300 @@ body{
     width: 20px;
     height: 20px;
 }
+
+.stats_container{
+    margin-left: auto;
+    margin-right: auto;
+    padding: 16px;
+    width: 1200px;
+    margin-bottom: 100px;
+}
+.stats_item_box{
+    display: flex;
+    flex-flow: row wrap;
+    align-content: space-between;
+    justify-content: space-between;
+    padding-top: 50px;
+    margin-bottom: -40px;
+}
+.stats_content_box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.stats_content_box > h2{
+    color: var(--color-primary);
+    margin-bottom: 5px;
+    font-size: 40px;
+    line-height: 1.2;
+    font-family: var(--font-family-heading);
+}
+.stats_content_box > h4{
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 1em;
+    font-family: var(--font-family-heading);
+    color: var(--font-color-heading);
+    display: block;
+    margin-block-start: 1.33em;
+    margin-block-end: 1.33em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+.product_brand_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 40px;
+    background: #fffef2;
+}
+.branding_text_container{
+    margin-top: 40px;
+}
+.branding_text_box {
+    width: 1200px;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 16px;
+}
+.branding_text{
+    display: block;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0%;
+}
+.branding_text > h2{
+    margin-bottom: 10px;
+    font-size: 40px;
+    line-height: 1.2;
+    margin-top: 0;
+    font-family: var(--font-family-heading);
+    color: var(--font-color-heading);
+    font-weight: bold;
+}
+.branding_photo{
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0%;
+    justify-content: flex-end;
+}
+
+.product_container{
+    width: 1200px;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 16px;
+    display: block;
+}
+.product_title{
+    text-align: center;
+    font-size: 28px;
+    line-height: 1.2;
+    margin-top: 0;
+    margin-bottom: 1em;
+    font-family: var(--font-family-heading);
+    color: var(--font-color-heading);
+}
+.product_sub_container{
+    display: flex;
+    justify-content: space-between;
+    background: #fffef2;
+}
+.product_sub_box{
+    display: flex;
+    flex-direction: column;
+}
+.product_sub_box_div{
+    display: flex;
+    align-items: center;
+    margin: 14px 0;
+}
+.product_sub_box_div > h4{
+    width: 300px;
+    margin-right: 50px;
+    font-size: 24px;
+    color: #000;
+    margin-top: 0;
+    margin-bottom: 1em;
+    font-family: var(--font-family-heading);
+}
+.product_icon_container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.product_icon_box{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 184px;
+    height: 160px;
+    padding: 10px 7px;
+    margin: 10px;
+    background: #fff;
+    border: 1.5px solid transparent;
+    border-radius: 10px;
+    box-shadow: 0 1px 6px rgba(169,188,218,.65);
+}
+
+.product_icon_box:hover{
+    border-color: var(--color-primary) !important;
+}
+.product_icon_box > h4{
+    margin-top: 5px;
+    font-size: 16px;
+    line-height: 1.3em;
+    text-align: center;
+    margin-bottom: 1em;
+    font-family: var(--font-family-heading);
+    color: var(--font-color-heading);
+    display: block;
+    margin-block-start: 1.33em;
+    margin-block-end: 1.33em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+.product_icon_box > span{
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    margin: 10px;
+    font-weight: 700;
+    color: var(--color-primary);
+    cursor: pointer;
+}
+
+.client_container{
+    margin-bottom: 50px;
+    display:block;
+}
+.client_container > h3{
+    text-align: center;
+    font-size: 28px;
+    line-height: 1.2;
+        margin-top: 0;
+    margin-bottom: 1em;
+    font-family: var(--font-family-heading);
+    color: var(--font-color-heading);
+    display:block;
+        margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+.client_logo_container{
+    display: block;
+    position: relative;
+    width: 100vw;
+    max-width: 100%;
+    height: 120px;
+    overflow-x: hidden;
+}
+
+.client_logo_box{
+    display: flex;
+    animation: client_logo_box 32s linear infinite;
+}
+
+.client_logo_run {
+    display: flex;
+    flex-shrink: 0;
+    gap: 0.1rem;
+    align-items: center;
+    justify-content: space-around;
+    min-width: 100%;
+}
+
+.client_logo_run > img{
+    margin-right: 40px;
+    margin-left: 40px;
+    /* width: 146px; */
+    aspect-ratio: auto 146 / 73;
+    /* height: 73px; */
+}
+
+.get_started_container{
+    display: block;
+    margin-bottom: 50px;
+    background: var(--color-secondary);
+}
+.get_started_box{
+    width: 1200px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 16px;
+}
+
+.get_started_box > div {
+    display: block;
+    padding: 25px 0;
+}
+
+h3{
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    font-family: var(--font-family-heading);
+    color: var(--font-color-heading);
+    margin-top: 0;
+}
+
+.get_started_box > div > h3{
+    margin-bottom: 10px;
+    font-size: 28px;
+    line-height: 1.2;
+}
+
+.get_started_box > button{
+    border: 1px solid var(--color-primary);
+    min-width: 72px;
+    height: 36px;
+    padding: 4px 16px;
+        color: #fff!important;
+    background: var(--color-primary)!important;
+    border-radius: 4px;
+    outline: none;
+    transition: color .1s linear,background-color .1s linear,border-color .1s linear;
+    will-change: color,background-color,border-color;
+        align-items: center;
+    cursor: pointer;
+    display: flex;
+    font-family: var(--font-family);
+        justify-content: center;
+    line-height: 1.2;
+        font-size: 14px!important;
+    font-weight: 700!important;
+}
+
+.get_started_box > button > div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.get_started_box > button > div >  svg {
+    margin-left: 5px;
+    margin-bottom: 2px;
+}
+
