@@ -581,7 +581,7 @@ body{
 
 .client_logo_box{
     display: flex;
-    animation: client_logo_box 32s linear infinite;
+    animation: client_logo_box 4s linear infinite;
 }
 
 .client_logo_run {
@@ -591,6 +591,16 @@ body{
     align-items: center;
     justify-content: space-around;
     min-width: 100%;
+    animation: running_logo 32s linear infinite;
+}
+
+@keyframes running_logo {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-190%);
+    }
 }
 
 .client_logo_run > img{
@@ -736,6 +746,8 @@ h3{
 
 .how_it_work_step_center{
     display: flex;
+    position: relative;
+    /* top: 140px; */
     align-items: center;
     justify-content: center;
 }
@@ -750,12 +762,13 @@ h3{
 }
 .how_it_work_step_left_upper_text{
     display: block;
-    margin-bottom: 120px;
+    /* margin-bottom: 120px; */
     width: 300px;
     padding: 16px;
     border-radius: 10px;
     box-shadow: 0 1px 6px rgba(169,188,218,.65);
 }
+
 .how_it_work_step_left_upper_text > p{
     font-weight: 600;
     color: #ee3425;
@@ -790,14 +803,34 @@ h3{
 
 .how_it_work_step_left_upper_text > ul {
     padding-left: 16px;
-    font-size: 16px;
+}
+.how_it_work_step_left_upper_text > ul > li > p {
+    font-size: 15px;
 }
 
 .how_it_work_step_left_upper_arrow{
     position: absolute;
-    top: 104px;
+    top: 138px;
     left: 300px;
+    z-index: 2;
 }
+.how_it_work_step_left_lower_arrow{
+    position: absolute;
+    bottom: 144px;
+    left: 300px;
+    z-index: 2;
+}
+.how_it_work_step_right_upper_arrow {
+    position: absolute;
+    top: 138px;
+    right: 300px;
+}
+.how_it_work_step_right_lower_arrow{
+    position: absolute;
+    right: 300px;
+    bottom: 144px;
+}
+
 .how_it_work_step_left_upper_arrow > img{
     width: 150px;
     aspect-ratio: auto 150 / 59;
@@ -805,9 +838,27 @@ h3{
     overflow-clip-margin: content-box;
     overflow: clip;
 }
-
-
-
+.how_it_work_step_left_lower_arrow > img{
+    width: 150px;
+    aspect-ratio: auto 150 / 59;
+    height: 59px;
+    overflow-clip-margin: content-box;
+    overflow: clip;
+}
+.how_it_work_step_right_upper_arrow > img {
+    width: 150px;
+    aspect-ratio: auto 150 / 59;
+    height: 59px;
+    overflow-clip-margin: content-box;
+    overflow: clip;
+}
+.how_it_work_step_right_lower_arrow > img{
+    width: 150px;
+    aspect-ratio: auto 150 / 59;
+    height: 59px;
+    overflow-clip-margin: content-box;
+    overflow: clip;
+}
 
 
 
@@ -927,11 +978,25 @@ p {
     overflow: clip;
     display: block;
     object-fit: contain;
-    animation-name: styles_bounce__6VcwD;
+    animation-name: MoveUpDown;
     animation-duration: 4s;
     animation-timing-function: ease;
     animation-iteration-count: infinite;
 }
+
+@keyframes MoveUpDown {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+  }  
+
+
 
 .video_container{
     display: block;
