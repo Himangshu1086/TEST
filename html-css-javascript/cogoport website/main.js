@@ -47,3 +47,17 @@ var interval4 = setInterval(function() {
     number4+= 2000;
 }, 1);
 
+
+const show_cargo_owner_steps = (e) =>{
+    e.preventDefault()
+    document.getElementById("cargo_owner").style.display = 'Block'
+    document.getElementById("logistics_patner").style.display = 'None'
+}
+
+const show_cargo_logistic_steps = (e)=>{
+    e.preventDefault()
+    document.getElementById("cargo_owner").style.display = 'None '
+    document.getElementById("logistics_patner").style.display = 'Block'
+    document.getElementById('logistics_btn').style.backgroundColor = '#fbdc00'
+
+}
