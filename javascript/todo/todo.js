@@ -12,8 +12,37 @@
 
     }
 */
+// window.onload(load_task())
+
+const load_task = () => {
+
+    // Get the tasks from localStorage and convert it to an array
+    let tasks = {... localStorage};
+    let task_array = Object.entries(tasks);
+
+    // Loop through the tasks and add them to the list
+    const lists = document.getElementById("list");
+    task_array.forEach(task => {
+      lists.innerHTML += `<li id="${task[0]}">${task[1]}<button id="${task[0]}" onClick = "getId(this.id)" style="background-color: red;border-radius: 5px;padding: 10px;margin: 10px;font-size: 15px;color: white;" id="delete">Delete</button></li>`
+    });
+  }
+
+load_task()
 
 
-document.getElementById("add").onclick(()=>{
-    document.getElementById("task").textContent 
+document.getElementById("add").addEventListener('click',()=>{
+    let task = document.getElementById("task_input").value;
+    if(task=='')
+        alert('Please add a Task');
+    else
+    {
+        localStorage.setItem(localStorage.length++,task)
+        document.getElementById('task_input').value = ''
+    }
+    window.location.reload()
 })
+
+const getId = (id) =>{
+    localStorage.removeItem(id);
+    window.location.reload();
+}
