@@ -36,8 +36,17 @@ document.getElementById("add").addEventListener('click',()=>{
         alert('Please add a Task');
     else
     {
-        localStorage.setItem(localStorage.length++,task)
-        document.getElementById('task_input').value = ''
+        let tasks = {... localStorage};
+        let task_array = Object.entries(tasks);
+        if(task_array.length==0)
+        {
+            localStorage.setItem(0,task)
+            document.getElementById('task_input').value = ''
+        }
+        else{
+            localStorage.setItem(++task_array[task_array.length-1][0],task)
+            document.getElementById('task_input').value = ''
+        }
     }
     window.location.reload()
 })
@@ -46,3 +55,24 @@ const getId = (id) =>{
     localStorage.removeItem(id);
     window.location.reload();
 }
+
+
+let todos = []
+fetch('https://jsonplaceholder.typicode.com/todos')
+    .then(
+    (res) =>{
+        if(!res.status.ok){
+
+        }
+        return res.json();
+    }
+).then(
+    (data) => {
+        data.forEach(
+            (item) =>{
+                const todo_fetch_item = document.getElementById("todos_fetch");
+                todo_fetch_item.innerHTML += `<li>${item.title}</li>`
+            }
+        )
+    }
+)
