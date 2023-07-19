@@ -1,0 +1,117 @@
+body {
+  display: flex;
+  width: 1300px;
+  margin: auto;
+}
+.container {
+  display: block;
+  margin: 20px;
+  align-items: center;
+  justify-content: center;
+  width: 1200px;
+  height: 700px;
+}
+.input_container {
+  background-color: rgb(46, 97, 97);
+  padding: 20px;
+  border-radius: 10px 10px 0px 0px;
+  display: flex;
+  justify-content: left;
+  position: sticky;
+}
+#task_input {
+  font-size: 15px;
+  font-weight: bold;
+  padding: 10px;
+  width: 300px;
+  border-radius: 5px;
+  margin: 5px;
+  border: none;
+  outline: none;
+}
+.input_container > button {
+  /* padding: 10px; */
+  /* margin: 10px; */
+  border-radius: 5px;
+  color: white;
+  font: 13px;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+.input_container > button > img {
+    width: 45px;
+    height: 40px;
+}
+.todo_container {
+  border-radius: 0px 0px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start ;
+  margin: 0;
+  background-color: rgb(12, 112, 112);
+  font-size: 20px;
+  color: white;
+  height: 650px;
+  overflow-y: scroll;
+}
+.todo_container > h4{
+    text-align: center;
+}
+.todo_box{
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    padding: 10px 10px;
+}
+.todo_box_text_div{
+    width: 80%;
+    padding: 5px;
+    margin: 0px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    border-bottom: solid white 1px;
+}
+.todo_box_button_div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.todo_box_button_div > button {
+    background-color: rgb(146, 33, 33);
+    border-radius: 5px;
+    padding: 10px;
+    color: white;
+    font: 13px;
+    border: none;
+    cursor: pointer;
+}
+
+img {
+    width: 20px;
+    height: 15px;
+    color: white;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    /* box-shadow: inset 0 0 2px grey;  */
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgb(26, 26, 26); 
+    border-radius: 5px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #464646; 
+  }

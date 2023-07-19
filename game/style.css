@@ -1,0 +1,20 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: rgb(8, 44, 44);
+}
+canvas {
+  display: block;
+}
+main {
+  display: flex;
+  width: 600px;
+  justify-content: center;
+  margin: auto;
+  flex-direction: column;
+}
+main > h1{
+  text-align: left;
+  color: white;
+}

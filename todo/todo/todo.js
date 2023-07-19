@@ -23,7 +23,10 @@ const load_task = () => {
     // Loop through the tasks and add them to the list
     const lists = document.getElementById("list");
     task_array.forEach(task => {
-      lists.innerHTML += `<li id="${task[0]}">${task[1]}<button id="${task[0]}" onClick = "getId(this.id)" style="background-color: red;border-radius: 5px;padding: 10px;margin: 10px;font-size: 15px;color: white;" id="delete">Delete</button></li>`
+      lists.innerHTML += `<div class="todo_box" id="${task[0]}">
+      <div class="todo_box_text_div"><span>${task[1]}</span></div>
+      <div class="todo_box_button_div"><button id="${task[0]}" onClick = "getId(this.id)"><img src="delete.png"/></button></div>
+  </div>`
     });
   }
 
