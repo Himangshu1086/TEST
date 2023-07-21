@@ -13,51 +13,103 @@
     }
 */
 // window.onload(load_task())
+let tasks = { ...localStorage };
+let task_array = Object.entries(tasks);
 
-const load_task = () => {
-  // Get the tasks from localStorage and convert it to an array
-  let tasks = { ...localStorage };
-  let task_array = Object.entries(tasks);
+
+// Load on Windows Start
+const load_task = (task_array) => {
   // Loop through the tasks and add them to the list
   const lists = document.getElementById("list");
+
   task_array.forEach((task) => {
     const todo = JSON.parse(task[1]);
-    console.log(todo);
       if(todo['done'])
       {
-        lists.innerHTML += `<div class="todo_box" id="${task[0]}">
-        <div style="text-decoration:line-through; color:grey;" class="todo_box_text_div">
-        <input type="checkbox" checked onClick ="cross_text(this.id)" id ="${task[0]}">
-        <span>task : <span style="background-color:grey;color:black;padding:5px;border-radius:3px;">${todo["task"]}</span></span>
-        </div>
-        <div class="todo_box_button_div"><button id="${task[0]}" onClick = "getId(this.id)"><img src="delete.png"/></button></div>
-    </div>`;
+        lists.innerHTML += `
+    <div style="text-decoration:line-through; color:grey;" class="todo_box" id="${task[0]}">
+        <div class="todo_box_text_div">
+          <div class="todo_box_text">
+            <div class="todo_text_box_btn">
+              <input
+                type="checkbox"
+                checked
+                onClick="cross_text(this.id)"
+                id="${task[0]}"
+              />
+              <span id=${task[0]} class="todo_text">${todo["task"]}</span>
+            </div>
+            <div class="todo_btn_del_edit">
+              <div class="todo_box_button_div">
+                <button id="${task[0]}" onClick="edit_task(this.id)">
+                  <img src="edit.png" />
+                </button>
+              </div>
+              <div class="todo_box_button_div">
+                <button id="${task[0]}" onClick="getId(this.id)">
+                  <img src="delete.png" />
+                </button>
+              </div>
+            </div>
+          </div>`;
       }
       else{
-        lists.innerHTML += `<div class="todo_box" id="${task[0]}">
-      <div class="todo_box_text_div">
-      <input type="checkbox" onClick ="cross_text(this.id)" id="${task[0]}">
-      <span>task : <span style="background-color:white;color:black;padding:5px;border-radius:3px;">${todo["task"]}</span></span>
-      <span>priority : <span style="background-color:${todo['priority_color']};color:black;padding:5px;border-radius:3px;">${todo["priority"]}</span></span>
-      <span>category : <span style="background-color:rgb(204, 108, 233);color:black;padding:5px;border-radius:3px;">${todo["category"]}</span></span>
-      <span>due date : <span style="background-color:pink;color:black;padding:5px;border-radius:3px;">${todo["dueDate"]}</span></span>
-      </div>
-      <div class="todo_box_button_div"><button id="${task[0]}" onClick = "edit_task(this.id)"><img src="edit.png"/></button></div>
-      <div class="todo_box_button_div"><button id="${task[0]}" onClick = "getId(this.id)"><img src="delete.png"/></button></div>
+        lists.innerHTML += `
+        <div class="todo_box" id="${task[0]}">
+        <div class="todo_box_text_div">
+          <div class="todo_box_text">
+            <div class="todo_text_box_btn">
+              <input
+                type="checkbox"
+                onClick="cross_text(this.id)"
+                id="${task[0]}"
+              />
+              <span class="todo_text">${todo["task"]}</span>
+            </div>
+            
+            <div class="todo_btn_del_edit">
+              <div class="todo_box_button_div">
+                <button id="${task[0]}" onClick="edit_task(this.id)">
+                  <img src="edit.png" />
+                </button>
+              </div>
+              <div class="todo_box_button_div">
+                <button id="${task[0]}" onClick="getId(this.id)">
+                  <img src="delete.png" />
+                </button>
+              </div>
+            </div>
+          </div>
 
-      </div>`;
+          <div class="todo_box_tags">
+            <span style="background-color:${todo['priority_color']};"
+              >${todo["priority"]}</span
+            >
+            <span style="background-color: rgb(204, 108, 233)"
+              >${todo["category"]}</span
+            >
+            <span style="background-color: pink">${todo["dueDate"]}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+        `;
       }
   });
 };
 
-load_task();
 
+load_task(task_array);
+
+
+// Add a task
 document.getElementById("add").addEventListener("click", () => {
   const task = document.getElementById("task_input").value;
   const prioritySelect = document.getElementById("prioritySelect");
   const categorySelect = document.getElementById("categorySelect");
   const dueDateInput = document.getElementById("dueDateInput");
 
+    // Priority color set
   var bg_color = ''
 if(prioritySelect.value=='low') bg_color = 'rgb(216, 203, 87)'
         else if(prioritySelect.value =='medium') bg_color = 'rgb(90, 171, 224)'
@@ -88,12 +140,37 @@ if(prioritySelect.value=='low') bg_color = 'rgb(216, 203, 87)'
   window.location.reload();
 });
 
+
+
+
+// Delete the task
 const getId = (id) => {
   localStorage.removeItem(id);
   window.location.reload();
 };
 
 
+// Edit the task
+const edit_task = (id) =>{
+  document.getElementById(id).innerHTML = `
+  <input id="new_edited_task" class="adding_task_menu" type="text" placeholder="edit task"/> 
+  <button id=${id} class="adding_task_menu" onClick="edit_task_on_database(this.id)">Edit</button>
+  `
+}
+
+const edit_task_on_database = (id) =>{
+  const new_task = document.getElementById('new_edited_task').value
+  if(!new_task)
+  alert("Chutiya Banata Hai. Task Dal !")
+  const item = JSON.parse(localStorage.getItem(id))
+  item.task = new_task
+  // console.log(item)
+
+  localStorage.setItem(id , JSON.stringify(item))
+  window.location.reload()
+}
+
+// Line through the Done Task
 const cross_text =(id) =>{
     const todo = JSON.parse(localStorage.getItem(id))
     todo['done'] = !todo['done']
@@ -103,22 +180,40 @@ const cross_text =(id) =>{
 
 
 
+// Function to display filtered tasks of priority
+function displayFilteredTasks(value , id) {
+
+  let tasks = { ...localStorage };
+  let task_array = Object.entries(tasks);
+  let filter_list = ''
 
 
+  // Code for range of date
+  if(!value && !id)
+  {
+    const dueDateFrom = document.getElementById("dueDateFrom").value;
+    const dueDateTo = document.getElementById("dueDateTo").value;
+    filter_list = task_array.filter(task => 
+      JSON.parse(task[1])['dueDate'] >= dueDateFrom &&  JSON.parse(task[1])['dueDate'] <= dueDateTo
+      )
+  }
+  else
+  {
+    // code for priority and category
+    filter_list = task_array.filter(task => 
+      JSON.parse(task[1])[id] == value
+      )
+  }
 
 
-
-
-let todos = [];
-fetch("https://jsonplaceholder.typicode.com/todos")
-  .then((res) => {
-    if (!res.status.ok) {
+  if(filter_list.length == 0 ) 
+    {
+      alert('No Search Found.Click ok to see the Task')
+      window.location.reload()
     }
-    return res.json();
-  })
-  .then((data) => {
-    data.forEach((item) => {
-      const todo_fetch_item = document.getElementById("todos_fetch");
-      todo_fetch_item.innerHTML += `<li>${item.title}</li>`;
-    });
-  });
+const lists = document.getElementById("list");
+lists.innerHTML = `<h4>TODOS</h4>`
+load_task(filter_list)
+}
+
+

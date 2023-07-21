@@ -1,34 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <title>Todo</title>
-</head>
-<body >
-    <div class="container" >
-        <h1 style="text-align: center;">TODO APP</h1>
+  </head>
+  <body>
+    <div class="container">
+      <h1 style="text-align: center">TODO APP</h1>
+
+      <!-- Container for writing Todo and other stuff  -->
+      <div class="input_container_box">
         <div class="input_container">
             <input id="task_input" type="text" placeholder="task" />
             <select class="adding_task_menu" id="prioritySelect">
-                <option value="none" selected disabled>priority</option>
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
+              <option value="none" selected disabled>priority</option>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
             </select>
-            <input class="adding_task_menu" type="text" id="categorySelect" placeholder="Category">
-            <input class="adding_task_menu" type="date" id="dueDateInput">
-            <button id="add" ><img src="add-button.png"/></button>
-        </div>
-        <div class="todo_container" id="list">
-            <h4>TODOS</h4>
-        </div>
-        <ul  id="todos_fetch" style="overflow-y: scroll; height: 600px;margin-top: 121px;">
-            <h4>FETCH TODOS</h4>
-        </ul>
+            <input
+              class="adding_task_menu"
+              type="text"
+              id="categorySelect"
+              placeholder="Category"
+            />
+            <p>Due Date</p>
+            <input class="adding_task_menu" type="date" id="dueDateInput" />
+            <button id="add"><img src="add-button.png" /></button>
+      </div>
+        <div class="input_container" style="border-top-left-radius: 0;border-top-right-radius: 0;">
+            <p>Filters</p>
+            <!-- <p>Due Date Range:</p> -->
+            <input class="adding_task_menu"  type="date" id="dueDateFrom">
+            <p>to</p><input class="adding_task_menu" type="date" id="dueDateTo">
+            <button onClick="displayFilteredTasks()" class="adding_task_menu" style="background-color: rgb(36, 161, 161);">submit</button>
+            <input
+                onChange = "displayFilteredTasks(this.value,this.id)"
+              class="adding_task_menu"
+              type="text"
+              id="category"
+              placeholder="Category"
+            />
+            <select onChange="displayFilteredTasks(this.value,this.id)" class="adding_task_menu" id="priority">
+              <option disabled selected value="none">priority</option>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+    </div>
+
+      <!-- Listing of Todo -->
+      <div class="todo_container" id="list">
+        <h4>TODOS</h4>
     </div>
     <script type="text/javascript" src='todo.js'></script>
-</body>
+  </body>
 </html>
+
+<!-- 
+Subtasks: Users can create subtasks under main tasks for better task management. 
+Sorting: Users can sort the tasks based on due date, priority, etc.
+Search:
+Exact Todo: Users can search for a specific task using its exact name.
+Sub-tasks: Users can search for tasks based on their subtasks.
+Similar Words: Users can search for tasks with names similar to a given search term.
+Partial Search: Users can search for tasks using partial keywords.
+Tags: Users can search for tasks based on specific tags.
+
+Reminders (Cron): Users can set reminders for important tasks. -->
