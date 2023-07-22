@@ -50,25 +50,21 @@
               <option value="medium">Medium</option>
               <option value="high">High</option>
             </select>
+            <select onChange="sortingDueDates(this.value)" class="adding_task_menu">
+              <option disabled selected value="none">Sort by</option>
+              <option value="dueDateDec">Due Date Dec</option>
+              <option value="dueDateAsc">Due Date Asc</option>
+              <option value="priority">priority</option>
+            </select>
           </div>
     </div>
 
       <!-- Listing of Todo -->
       <div class="todo_container" id="list">
         <h4>TODOS</h4>
+      
     </div>
     <script type="text/javascript" src='todo.js'></script>
   </body>
 </html>
 
-<!-- 
-Subtasks: Users can create subtasks under main tasks for better task management. 
-Sorting: Users can sort the tasks based on due date, priority, etc.
-Search:
-Exact Todo: Users can search for a specific task using its exact name.
-Sub-tasks: Users can search for tasks based on their subtasks.
-Similar Words: Users can search for tasks with names similar to a given search term.
-Partial Search: Users can search for tasks using partial keywords.
-Tags: Users can search for tasks based on specific tags.
-
-Reminders (Cron): Users can set reminders for important tasks. -->

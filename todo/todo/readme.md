@@ -21,6 +21,7 @@
     | done        | BOOLEAN      | Task completion status (true/false)  |
     | priority    | VARCHAR(10)  |('low', 'normal', 'high')             |
     | category    | VARCHAR(50)  | Task category                        |
+    | sub task    | ARRAY        | Array of sub task                    |
     | due_date    | DATE         | Due date of the task                 |
     | created_at  | TIMESTAMP    | Timestamp of task creation           |
     | updated_at  | TIMESTAMP    | Timestamp of last update             |
@@ -32,6 +33,7 @@
     | reminder_id       | INT          | Primary Key                        |
     | user_id           | INT          | Foreign Key reference (User Table) |
     | todo_id           | INT          | Foreign Key reference (Todo Table) |
+    | remainder_time    | TIME         | time                               |
     | reminder_date     | DATE         | Date of the reminder               |
     | created_at        | TIMESTAMP    | Timestamp of reminder creation     |
     | updated_at        | TIMESTAMP    | Timestamp of last update           |

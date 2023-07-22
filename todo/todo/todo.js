@@ -13,9 +13,9 @@
     }
 */
 // window.onload(load_task())
-let tasks = { ...localStorage };
-let task_array = Object.entries(tasks);
-
+const tasks = { ...localStorage };
+const task_array = Object.entries(tasks);
+// console.log(task_array)
 
 // Load on Windows Start
 const load_task = (task_array) => {
@@ -56,51 +56,88 @@ const load_task = (task_array) => {
       else{
         lists.innerHTML += `
         <div class="todo_box" id="${task[0]}">
-        <div class="todo_box_text_div">
-          <div class="todo_box_text">
-            <div class="todo_text_box_btn">
-              <input
-                type="checkbox"
-                onClick="cross_text(this.id)"
-                id="${task[0]}"
-              />
-              <span class="todo_text">${todo["task"]}</span>
-            </div>
-            
-            <div class="todo_btn_del_edit">
-              <div class="todo_box_button_div">
-                <button id="${task[0]}" onClick="edit_task(this.id)">
-                  <img src="edit.png" />
-                </button>
-              </div>
-              <div class="todo_box_button_div">
-                <button id="${task[0]}" onClick="getId(this.id)">
-                  <img src="delete.png" />
-                </button>
-              </div>
-            </div>
-          </div>
+          <div class="todo_box_text_div">
+            <div class="todo_box_text">
+              <div class="todo_text_box_btn">
+                <div>
+                  <input type="checkbox"
+                  onClick="cross_text(this.id)"
+                  id="${task[0]}"/>
+                </div>
+                <div>
+                  <div>
+                    <span class="todo_text">${todo["task"]}</span>
+                  </div>
+                  <div id="${'subtask_container'+task[0]}" class="subtask_container">
+                   
 
-          <div class="todo_box_tags">
-            <span style="background-color:${todo['priority_color']};"
-              >${todo["priority"]}</span
-            >
-            <span style="background-color: rgb(204, 108, 233)"
-              >${todo["category"]}</span
-            >
-            <span style="background-color: pink">${todo["dueDate"]}</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="todo_btn_del_edit">
+                
+                <div class="todo_box_button_div">
+                  <button id="${task[0]}" onClick="edit_task(this.id)">
+                    <img src="edit.png" alt="Edit the task"/>
+                  </button>
+                </div>
+
+                <div class="todo_box_button_div">
+                  <button id="${task[0]}" onClick="getId(this.id)">
+                    <img src="delete.png" alt="Delete the task"/>
+                  </button>
+                </div>
+
+                <div class="todo_box_button_div">
+                  <button id="${task[0]}" onClick="create_alert(this.id)">
+                   <img src="bell.png" / >
+                  </button>
+                </div>
+
+                <div class="todo_box_button_div">
+                  <button id="${task[0]}" onClick="add_subtask(this.id)">
+                   <img src="add.png" / >
+                  </button>
+                </div>
+              </div>
+            </div>
+
+
+  
+            <div class="todo_box_tags">
+              <span style="background-color:${todo.priority_color};"
+                >${todo["priority"]}</span
+              >
+              <span style="background-color: rgb(204, 108, 233)"
+                >${todo["category"]}</span
+              >
+              <span style="background-color: pink">${todo["dueDate"]}</span>
+              <span style="background-color: rgb(112, 216, 109)"><span style="font-weight: bold;">Alert :</span> ${todo.alert_date}  Time :${todo.alert_time}</span>
+            </div>
+
           </div>
         </div>
       </div>
-    </div>
         `;
       }
   });
 };
 
 
-load_task(task_array);
+const load_subtask = (task_array)=>{
+  task_array.forEach((task) => {
+    const todo = JSON.parse(task[1]);
+    todo.subTask.forEach(sub => {
+      document.getElementById("subtask_container"+task[0]).innerHTML += 
+      `<span>${sub}<span>`
+    })
+  })
+}
 
+
+load_task(task_array);
+load_subtask(task_array);
 
 // Add a task
 document.getElementById("add").addEventListener("click", () => {
@@ -123,6 +160,9 @@ if(prioritySelect.value=='low') bg_color = 'rgb(216, 203, 87)'
     category: categorySelect.value,
     dueDate: dueDateInput.value,
     priority_color :bg_color,
+    subTask:[],
+    alert_date:'',
+    alert_time:''
   };
   if (!Todo.task) alert("Please add a Task");
   else {
@@ -153,8 +193,9 @@ const getId = (id) => {
 // Edit the task
 const edit_task = (id) =>{
   document.getElementById(id).innerHTML = `
-  <input id="new_edited_task" class="adding_task_menu" type="text" placeholder="edit task"/> 
+  <input id="new_edited_task" class="adding_task_menu" value="${JSON.parse(task_array[id][1]).task}" type="text" placeholder="edit task"/> 
   <button id=${id} class="adding_task_menu" onClick="edit_task_on_database(this.id)">Edit</button>
+  <button id=${id} class="adding_task_menu" onClick="cancel()">Cancel</button>
   `
 }
 
@@ -180,13 +221,14 @@ const cross_text =(id) =>{
 
 
 
+
+
 // Function to display filtered tasks of priority
 function displayFilteredTasks(value , id) {
 
   let tasks = { ...localStorage };
   let task_array = Object.entries(tasks);
   let filter_list = ''
-
 
   // Code for range of date
   if(!value && !id)
@@ -204,8 +246,6 @@ function displayFilteredTasks(value , id) {
       JSON.parse(task[1])[id] == value
       )
   }
-
-
   if(filter_list.length == 0 ) 
     {
       alert('No Search Found.Click ok to see the Task')
@@ -217,3 +257,133 @@ load_task(filter_list)
 }
 
 
+
+// cancel button
+const cancel = () =>{
+  window.location.reload();
+}
+
+
+
+
+
+// Add subtasks
+const add_subtask = (id) =>{
+  document.getElementById(id).innerHTML = `
+  <input id="new_edited_task" class="adding_task_menu" type="text" placeholder="sub task"/> 
+  <button id=${id} class="adding_task_menu" onClick="add_task_sub(this.id)">Add Subtask</button>
+  <button id=${id} class="adding_task_menu" onClick="cancel()">Cancel</button>
+  `
+}
+
+const add_task_sub = (id)=>{
+  const subtask_nw = document.getElementById('new_edited_task').value
+  if(!subtask_nw)
+    return alert("No sub task")
+
+    const todo = JSON.parse(localStorage.getItem(id))
+    todo["subTask"].push(subtask_nw)
+    localStorage.setItem(id, JSON.stringify(todo))
+    location.reload()
+    load_subtask(task_array);
+}
+
+
+
+//Sorting by due dates
+const sortingDueDates = (tag)=>{
+  let tasks = { ...localStorage };
+  let task_array = Object.entries(tasks);
+  let list_srt =''
+
+  //DECENDING ORDER
+    if(tag=='dueDateDec')
+    {
+      list_srt = task_array.sort(
+        ( a,b ) => {
+          return  new Date(JSON.parse(a[1]).dueDate) - new Date(JSON.parse(b[1]).dueDate)
+        }
+      )
+    }
+    //ASCENDING ORDER
+    else if(tag=='dueDateAsc')
+    {
+      list_srt = task_array.sort(
+        ( a,b ) => {
+          return  new Date(JSON.parse(b[1]).dueDate - new Date(JSON.parse(a[1]).dueDate))
+        }
+      )
+    }
+    //PRIORITY SORTING
+    else
+    {
+      const priorityOrder = { "low": 1, "medium": 2, "high": 3 };
+      list_srt = task_array.sort(
+        (a, b) =>  priorityOrder[JSON.parse(b[1]).priority] - priorityOrder[JSON.parse(a[1]).priority]);
+    }
+
+    const lists = document.getElementById("list");
+    lists.innerHTML = `<h4>TODOS</h4>`
+    load_task(list_srt)
+    load_subtask(list_srt)
+}
+
+//convert date and time to second
+function dateTimeToSeconds(dateString, timeString) {
+  const dateTimeString = dateString + " " + timeString;
+  const dateObject = new Date(dateTimeString);
+  const seconds = Math.floor(dateObject.getTime() / 1000);
+  return seconds;
+}
+
+
+
+// Create Alert 
+const create_alert = (id) =>{
+
+  document.getElementById(id).innerHTML = `
+  <input id="new_edited_date" class="adding_task_menu" type="date" placeholder="Create Alert"/> 
+  <input id="new_edited_time" class="adding_task_menu" type="time" placeholder="Create Alert"/> 
+  <button id=${id} class="adding_task_menu" onClick="add_alert(this.id)">Alert</button>
+  <button id=${id} class="adding_task_menu" onClick="cancel()">Cancel</button>
+  `
+}
+const add_alert = (id)=>{
+  const date_alert = document.getElementById('new_edited_date').value
+  const time_alert = document.getElementById("new_edited_time").value
+
+
+  if(!date_alert && !time_alert)
+    return alert("add alert")
+
+    const todo = JSON.parse(localStorage.getItem(id))
+    todo["alert_date"] = date_alert
+    todo["alert_time"] = time_alert
+    localStorage.setItem(id, JSON.stringify(todo))
+    window.location.reload()
+    load_task(task_array)
+    load_subtask(task_array)
+}
+
+
+task_array.forEach((task) => {
+const todo = JSON.parse(task[1]);
+const alert_created_at = new Date().toISOString().split('T')[0]
+const seconds = dateTimeToSeconds(todo.alert_date , todo.alert_time)
+const created_alerts = dateTimeToSeconds(alert_created_at,'00:00')
+  if(seconds && created_alerts)
+    {
+    showAlert(seconds,created_alerts , task[0] ,todo);
+    }
+})
+
+
+function showAlert(time,create_date ,id , todo) {
+  setTimeout(function () {
+    alert("Complete this task!");
+    todo["alert_date"] = ''
+    todo["alert_time"] = ''
+    localStorage.setItem(id, JSON.stringify(todo))
+    window.location.reload()
+  }, (time - create_date)*1000);
+} 
