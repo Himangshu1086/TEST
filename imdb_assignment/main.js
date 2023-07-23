@@ -6,6 +6,7 @@ let totalResults = 0;
 // Initial fetch when the page loads
 fetchMovies('hello', 1);
 
+//Fetch api
 function fetchMovies(searchText = '', page = 1) {
     const url = `https://www.omdbapi.com/?apikey=${apiKey}&s=${searchText}&page=${page}`;
     fetch(url)
@@ -18,6 +19,8 @@ function fetchMovies(searchText = '', page = 1) {
         .catch(error => console.error('Error fetching movies:', error));
 }
 
+
+// Listing of Movies from API list
 function displayMovies(movies) {
     const movieListElement = document.getElementById('movieList');
     movieListElement.innerHTML = '';
@@ -38,6 +41,8 @@ function displayMovies(movies) {
     });
 }
 
+
+
 function updatePagination() {
     const paginationElement = document.getElementById('pagination');
     const totalPages = Math.ceil(totalResults / moviesPerPage);
@@ -48,6 +53,8 @@ function updatePagination() {
     }
     paginationElement.innerHTML = paginationHTML;
 }
+
+
 
 function goToPage(page) {
     currentPage = page;
@@ -75,7 +82,7 @@ function showMovieDetails(movieId) {
 
             // Set the movieId in the data attribute of the movieDetails element
             document.getElementById('movieDetails').dataset.movieId = movieId;
-
+            document.getElementById('movieDetails').style.display = 'flex';
             // Load existing user rating and comment from local storage
             const savedRating = localStorage.getItem(`rating_${movieId}`);
             const savedComment = localStorage.getItem(`comment_${movieId}`);
@@ -104,6 +111,7 @@ function saveRating() {
     const movieId = document.getElementById('movieDetails').dataset.movieId;
     const rating = document.getElementById('rating').value;
     localStorage.setItem(`rating_${movieId}`, rating);
+    window.location.reload()
 }
 
 function saveComment() {
