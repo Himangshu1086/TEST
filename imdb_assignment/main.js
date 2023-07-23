@@ -110,17 +110,22 @@ function showMovieDetails(movieId) {
 function saveRating() {
     const movieId = document.getElementById('movieDetails').dataset.movieId;
     const rating = document.getElementById('rating').value;
+    if(!rating)
+        return alert("rating is empty!")
     localStorage.setItem(`rating_${movieId}`, rating);
-    window.location.reload()
+    // window.location.reload()
 }
 
 function saveComment() {
     const movieId = document.getElementById('movieDetails').dataset.movieId;
     const comment = document.getElementById('comment').value;
+    if(!comment)
+        return alert("Please type comment!")
     localStorage.setItem(`comment_${movieId}`, comment);
 }
 function submitRatingAndComment() {
     saveRating();
     saveComment();
-    alert("Rating and comment submitted successfully!");
+    if(saveRating() && saveComment())
+        return alert("Rating and comment submitted successfully!");
 }

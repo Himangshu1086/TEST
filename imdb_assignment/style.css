@@ -48,14 +48,16 @@ input[type="text"] {
 }
 
 #pagination {
-    text-align: center;
-    margin: 20px 0;
+    width: 60%;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px auto;
 }
 
 #pagination button {
     margin: 5px;
     padding: 5px 10px;
-    background-color: #007bff;
+    background-color: #071b30;
     color: #fff;
     border: none;
     border-radius: 5px;
