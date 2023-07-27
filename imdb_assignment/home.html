@@ -8,9 +8,9 @@
 </head>
 <body>
     <header>
-        <h1>IMDB Movie</h1>
+        <h1>OMDB Movie</h1>
         <div class="search_box">
-            <input type="text" id="search" placeholder="Search movies...">
+            <input type="text" id="search" placeholder="Search movies..."value="hello">
         </div>
     </header>
 
@@ -23,9 +23,11 @@
         <div class="movie_details">
             <h3 style="display: flex;">Year: <span id="movieYear"> </span></h3>
         <h4>Genre: <span id="movieGenre"></span></h4>
-        <p><b>Plot:</b> <span id="moviePlot"></span></p>
+        <p><b>Plot: </b> <span id="moviePlot"></span></p>
+        <p><b>Rating: </b><span id="show_rating"></span></p>
+        <p><b>Comment: </b><span id="show_comment"></span></p>
         <div>
-            <label for="rating">Rating:</label>
+            <label for="rating">Rating: </label>
             <select id="rating" onchange="saveRating()">
                 <option value="">Give Rating</option>
                 <option value="1">⭐</option>
@@ -36,25 +38,27 @@
             </select>
         </div>
         <div>
-            <label for="comment">Your Comment:</label>
+            <label for="comment">Your Comment: </label>
             <textarea id="comment" rows="4" cols="30" onchange="saveComment()"></textarea>
-            <button onclick="submitRatingAndComment()">Submit</button>
+            <button onClick="submitRatingAndComment()">Submit</button>
         </div>
         </div>
     </div>
 
 
     <div id="movieList">
-     
+        <!-- Movies will be added here -->
     </div>
 
-    <div id="pagination">
-     
+    <!-- Pagination -->
+    <div class="pagination">
+        <button onClick="showPreviousPage()" id="prevBtn" >&lt; Previous</button>
+        <div id="pagination">
+            <!--Pagination button will be added -->
+        </div>
+        <button onClick="showNextPage()" id="nextBtn">Next &gt;</button>
+        <span id="pageDetail">Showing 1 of 1 page</span>
     </div>
-
-    
-
-
 
     <script src="main.js"></script>
 </body>
