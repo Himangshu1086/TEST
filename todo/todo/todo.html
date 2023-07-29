@@ -13,8 +13,9 @@
 
       <!-- Container for writing Todo and other stuff  -->
       <div class="input_container_box">
+        <span>Format for Task with auto complete date : Task [spacebar] dd/mm/yyyy </span>
         <div class="input_container">
-            <input id="task_input" type="text" placeholder="task" />
+            <input id="task_input" type="text" placeholder="Task" />
             <select class="adding_task_menu" id="prioritySelect">
               <option value="none" selected disabled>priority</option>
               <option value="low">Low</option>
@@ -42,14 +43,14 @@
 
 
             <p>Due Date</p>
-            <input class="adding_task_menu" type="date" id="dueDateInput" />
+            <input class="adding_task_menu add_min" type="date" id="dueDateInput" />
             <button id="add"><img src="add-button.png" /></button>
       </div>
         <div class="input_container" style="border-top-left-radius: 0;border-top-right-radius: 0;">
             <p>Filters</p>
             <!-- <p>Due Date Range:</p> -->
-            <input class="adding_task_menu"  type="date" id="dueDateFrom">
-            <p>to</p><input class="adding_task_menu" type="date" id="dueDateTo">
+            <input class="adding_task_menu add_min"  type="date" id="dueDateFrom">
+            <p>to</p><input class="adding_task_menu add_min" type="date" id="dueDateTo">
             <button onClick="displayFilteredTasks()" class="adding_task_menu" style="background-color: rgb(36, 161, 161);">submit</button>
             <input
                 onChange = "displayFilteredTasks(this.value,this.id)"

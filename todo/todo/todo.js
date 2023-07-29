@@ -2,6 +2,13 @@
 // ToDO list
 
 
+// set the date minimum today
+const today = new Date().toISOString().split('T')[0]
+let date_element = document.getElementsByClassName("add_min");
+for (const item of date_element) {
+  item.setAttribute("min", today);
+}
+
 
 // window.onload(load_task())
 const tasks = { ...localStorage };
@@ -18,7 +25,7 @@ const load_task = (task_array) => {
       if(todo['done'])
       {
         lists.innerHTML += `
-    <div style="text-decoration:line-through; color:grey;" class="todo_box" id="${task[0]}">
+    <div draggable="true" style="text-decoration:line-through; color:grey;" class="todo_box" id="${task[0]}">
         <div class="todo_box_text_div">
           <div class="todo_box_text">
             <div class="todo_text_box_btn">
@@ -46,7 +53,7 @@ const load_task = (task_array) => {
       }
       else{
         lists.innerHTML += `
-        <div class="todo_box" id="${task[0]}">
+        <div draggable="true" class="todo_box" id="${task[0]}">
           <div class="todo_box_text_div">
             <div class="todo_box_text">
               <div class="todo_text_box_btn">
@@ -136,13 +143,52 @@ const load_subtask = (task_array)=>{
 load_task(task_array);
 load_subtask(task_array);
 
+
+// Auto complete Date
+const autoComplete =(task)=>{
+  const  todoText = task.trim();
+  const dueDate = extractDueDate(todoText);
+
+    // If a valid date is extracted, create the todo without the date part
+      const todoWithoutDate = dueDate ? todoText.replace(dueDate, '').trim() : todoText;
+
+      // Use the 'dd/mm/yyyy' format for the date
+      const formattedDueDate = dueDate ? formatDueDate(dueDate) : '';
+      return {todoWithoutDate ,formattedDueDate }
+}
+
+function extractDueDate(text) {
+      // Regular expression to extract the date in the format: "dd/mm/yyyy"
+      const dateRegex = /(\b\d{1,2}[\/-]\d{1,2}[\/-]\d{4}\b)/;
+
+      const match = text.match(dateRegex);
+      return match ? match[0] : null;
+    }
+
+function formatDueDate(dateString) {
+      // Assuming that the date provided is in the format: "dd/mm/yyyy"
+      const parts = dateString.split('/');
+      const day = parts[0];
+      const month = parts[1];
+      const year = parts[2];
+
+      // Re-arrange the parts to format the date as "dd/mm/yyyy"
+      return `${day}/${month}/${year}`;
+}
+
+
 // Add a task
 document.getElementById("add").addEventListener("click", () => {
   const task = document.getElementById("task_input").value;
+  const todo_and_auto_date = autoComplete(task);
   const prioritySelect = document.getElementById("prioritySelect");
   const categorySelect = document.getElementById("categorySelect");
-  const dueDateInput = document.getElementById("dueDateInput");
+  let dueDateInput = document.getElementById("dueDateInput").value;
+  if(dueDateInput =='')
+    dueDateInput = todo_and_auto_date.formattedDueDate;
   const tagSelect = document.getElementById('tagSelect');
+
+
 
 // Priority color set
   var bg_color = ''
@@ -152,11 +198,11 @@ document.getElementById("add").addEventListener("click", () => {
 
 
   const Todo = {
-    task: task,
+    task: todo_and_auto_date.todoWithoutDate,
     done: false,
     priority: prioritySelect.value,
     category: categorySelect.value,
-    dueDate: dueDateInput.value,
+    dueDate: dueDateInput,
     priority_color :bg_color,
     tag:tagSelect.value,
     status:'Incomplete',
@@ -273,6 +319,8 @@ load_subtask(filter_list)
 }
 
 
+
+
 // Pending task 
 task_array.forEach((task) => {
   const todo = JSON.parse(task[1]);
@@ -380,8 +428,9 @@ function dateTimeToSeconds(dateString, timeString) {
 // Create Alert 
 const create_alert = (id) =>{
 
+  const today = new Date().toISOString().split('T')[0]
   document.getElementById(id).innerHTML = `
-  <input id="new_edited_date" class="adding_task_menu" type="date" placeholder="Create Alert"/> 
+  <input id="new_edited_date" class="adding_task_menu" min=${today} type="date" placeholder="Create Alert"/> 
   <input id="new_edited_time" class="adding_task_menu" type="time" placeholder="Create Alert"/> 
   <button id=${id} class="adding_task_menu" onClick="add_alert(this.id)">Alert</button>
   <button id=${id} class="adding_task_menu" onClick="cancel()">Cancel</button>
@@ -441,3 +490,60 @@ document.getElementById('search').addEventListener('input' , e =>{
 
 }
 })
+
+
+
+// drag and drop
+
+const dragContainer = document.getElementById('todo_container');
+const dragItems = document.getElementsByClassName('todo_box');
+
+let draggedItem = null;
+
+// Event listeners for drag events
+for (const item of dragItems) {
+  item.addEventListener('dragstart', dragStart);
+  item.addEventListener('dragenter', dragEnter);
+  item.addEventListener('dragover', dragOver);
+  item.addEventListener('dragleave', dragLeave);
+  item.addEventListener('drop', drop);
+  item.addEventListener('dragend', dragEnd);
+}
+
+function dragStart(event) {
+  draggedItem = this;
+  this.style.opacity = '0.4';
+  event.dataTransfer.effectAllowed = 'move';
+  event.dataTransfer.setData('text/html', this.innerHTML);
+}
+
+function dragEnter(event) {
+  event.preventDefault();
+  this.classList.add('over');
+}
+
+function dragOver(event) {
+  event.preventDefault();
+  event.dataTransfer.dropEffect = 'move';
+}
+
+function dragLeave() {
+  this.classList.remove('over');
+}
+
+function drop(event) {
+  event.preventDefault();
+  if (draggedItem !== this) {
+    const draggedHTML = draggedItem.innerHTML;
+    draggedItem.innerHTML = this.innerHTML;
+    this.innerHTML = draggedHTML;
+  }
+}
+
+function dragEnd() {
+  for (const item of dragItems) {
+    item.style.opacity = '1';
+    item.classList.remove('over');
+  }
+  draggedItem = null;
+}
