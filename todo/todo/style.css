@@ -1,6 +1,6 @@
 body {
   display: flex;
-  width: 1300px;
+  width: 80%;
   margin: auto;
 }
 p {
@@ -11,7 +11,7 @@ p {
   margin: 20px;
   align-items: center;
   justify-content: center;
-  width: 1200px;
+  width: 100%;
   height: 700px;
 }
 .input_container {

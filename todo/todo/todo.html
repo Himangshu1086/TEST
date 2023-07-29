@@ -9,7 +9,7 @@
   </head>
   <body>
     <div class="container">
-      <h1 style="text-align: center">TODO APP</h1>
+      <h1 style="text-align: center;">TODO APP</h1>
 
       <!-- Container for writing Todo and other stuff  -->
       <div class="input_container_box">
@@ -27,6 +27,20 @@
               id="categorySelect"
               placeholder="Category"
             />
+
+
+
+
+            <input
+              class="adding_task_menu"
+              type="text"
+              id="tagSelect"
+              placeholder="Tag"
+            />
+
+
+
+
             <p>Due Date</p>
             <input class="adding_task_menu" type="date" id="dueDateInput" />
             <button id="add"><img src="add-button.png" /></button>
@@ -42,20 +56,70 @@
               class="adding_task_menu"
               type="text"
               id="category"
-              placeholder="Category"
+              placeholder="Category Filter"
             />
+
+
+
+
+
+            <input
+                onChange = "displayFilteredTasks(this.value,this.id)"
+              class="adding_task_menu"
+              type="text"
+              id="tag"
+              placeholder="Tag Filter"
+            />
+
+
+
+
+
             <select onChange="displayFilteredTasks(this.value,this.id)" class="adding_task_menu" id="priority">
-              <option disabled selected value="none">priority</option>
+              <option disabled selected value="none">priority filter</option>
               <option value="low">Low</option>
               <option value="medium">Medium</option>
               <option value="high">High</option>
             </select>
             <select onChange="sortingDueDates(this.value)" class="adding_task_menu">
-              <option disabled selected value="none">Sort by</option>
+              <option disabled selected value="none">Sort by...</option>
               <option value="dueDateDec">Due Date Dec</option>
               <option value="dueDateAsc">Due Date Asc</option>
               <option value="priority">priority</option>
             </select>
+
+
+
+
+
+
+            <select onChange="displayFilteredTasks(this.value,this.id)" class="adding_task_menu" id="status">
+              <option disabled selected value="none">Task Status...</option>
+              <option value="All">All</option>
+              <option value="Completed">Completed</option>
+              <option value="Incomplete">Incomplete</option>
+              <option value="Pending">Pending</option>
+            </select>
+
+
+
+
+
+
+            <input
+                onChange = "searchTask(this.value,this.id)"
+              class="adding_task_menu"
+              type="text"
+              id="search"
+              placeholder="Search..."
+            />
+
+
+
+
+
+
+
           </div>
     </div>
 

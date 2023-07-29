@@ -1,17 +1,8 @@
 //Assignment 3
 // ToDO list
-/*
-    maintain a list of todo items - keep a array in memory - [{task:"abc" , id:1} , {task:"dsf" , id:2}]
-    function to add to the array 
-    function to remove a particular element in the array
 
-    UI -
-    {
-        textbox with save button (click event call the add task function , clear the textbox , list the task )
-        delete button (on click pass the id that will be delete)
 
-    }
-*/
+
 // window.onload(load_task())
 const tasks = { ...localStorage };
 const task_array = Object.entries(tasks);
@@ -106,14 +97,20 @@ const load_task = (task_array) => {
 
   
             <div class="todo_box_tags">
+              <span>Priority: </span>
               <span style="background-color:${todo.priority_color};"
                 >${todo["priority"]}</span
               >
+              <span>Category: </span>
               <span style="background-color: rgb(204, 108, 233)"
                 >${todo["category"]}</span
               >
-              <span style="background-color: pink">${todo["dueDate"]}</span>
-              <span style="background-color: rgb(112, 216, 109)"><span style="font-weight: bold;">Alert :</span> ${todo.alert_date}  Time :${todo.alert_time}</span>
+              <span>Tag: </span>
+              <span style="background-color: rgb(204, 108, 233)"
+                >${todo["tag"]}</span
+              >
+              <span>Due Date:</span><span style="background-color: pink">${todo["dueDate"]}</span>
+              <span>Alert: </span><span style="background-color: rgb(112, 216, 109)"><span style="font-weight: bold;">Date :--- </span> ${todo.alert_date}  Time :--- ${todo.alert_time}</span>
             </div>
 
           </div>
@@ -145,10 +142,11 @@ document.getElementById("add").addEventListener("click", () => {
   const prioritySelect = document.getElementById("prioritySelect");
   const categorySelect = document.getElementById("categorySelect");
   const dueDateInput = document.getElementById("dueDateInput");
+  const tagSelect = document.getElementById('tagSelect');
 
-    // Priority color set
+// Priority color set
   var bg_color = ''
-if(prioritySelect.value=='low') bg_color = 'rgb(216, 203, 87)'
+  if(prioritySelect.value=='low') bg_color = 'rgb(216, 203, 87)'
         else if(prioritySelect.value =='medium') bg_color = 'rgb(90, 171, 224)'
         else bg_color = 'rgb(206, 36, 36)';
 
@@ -160,6 +158,8 @@ if(prioritySelect.value=='low') bg_color = 'rgb(216, 203, 87)'
     category: categorySelect.value,
     dueDate: dueDateInput.value,
     priority_color :bg_color,
+    tag:tagSelect.value,
+    status:'Incomplete',
     subTask:[],
     alert_date:'',
     alert_time:''
@@ -215,6 +215,11 @@ const edit_task_on_database = (id) =>{
 const cross_text =(id) =>{
     const todo = JSON.parse(localStorage.getItem(id))
     todo['done'] = !todo['done']
+    if(!todo['done'])
+      todo['status'] = 'Incomplete';
+      else
+      todo['status'] = 'Completed';
+     
     localStorage.setItem(id, JSON.stringify(todo))
     location.reload()
 }
@@ -230,6 +235,11 @@ function displayFilteredTasks(value , id) {
   let task_array = Object.entries(tasks);
   let filter_list = ''
 
+  if(value =='All') 
+    {
+      return window.location.reload()
+    }
+
   // Code for range of date
   if(!value && !id)
   {
@@ -241,11 +251,15 @@ function displayFilteredTasks(value , id) {
   }
   else
   {
-    // code for priority and category
+    
+    // code for priority and category and tag
     filter_list = task_array.filter(task => 
       JSON.parse(task[1])[id] == value
       )
   }
+
+  console.log(filter_list)
+
   if(filter_list.length == 0 ) 
     {
       alert('No Search Found.Click ok to see the Task')
@@ -253,8 +267,32 @@ function displayFilteredTasks(value , id) {
     }
 const lists = document.getElementById("list");
 lists.innerHTML = `<h4>TODOS</h4>`
+
 load_task(filter_list)
+load_subtask(filter_list)
 }
+
+
+// Pending task 
+task_array.forEach((task) => {
+  const todo = JSON.parse(task[1]);
+  const today = new Date().toISOString().split('T')[0]
+  const seconds = dateTimeToSeconds(todo.dueDate ,'00:00')
+  const created_alerts = dateTimeToSeconds(today,'00:00')
+    if(seconds && created_alerts)
+      {
+      makeItPending(seconds,created_alerts , task[0] ,todo);
+      }
+  })
+  
+  
+  function makeItPending(time,create_date ,id , todo) {
+    setTimeout(function () {
+      todo["status"] = 'Pending'
+      localStorage.setItem(id, JSON.stringify(todo))
+      window.location.reload()
+    }, (time - create_date)*1000);
+  } 
 
 
 
@@ -291,13 +329,13 @@ const add_task_sub = (id)=>{
 
 
 //Sorting by due dates
-const sortingDueDates = (tag)=>{
+const sortingDueDates = (tagSort)=>{
   let tasks = { ...localStorage };
   let task_array = Object.entries(tasks);
   let list_srt =''
 
   //DECENDING ORDER
-    if(tag=='dueDateDec')
+    if(tagSort == 'dueDateDec')
     {
       list_srt = task_array.sort(
         ( a,b ) => {
@@ -306,13 +344,14 @@ const sortingDueDates = (tag)=>{
       )
     }
     //ASCENDING ORDER
-    else if(tag=='dueDateAsc')
+    else if(tagSort =='dueDateAsc')
     {
       list_srt = task_array.sort(
         ( a,b ) => {
-          return  new Date(JSON.parse(b[1]).dueDate - new Date(JSON.parse(a[1]).dueDate))
+          return  new Date(JSON.parse(a[1]).dueDate) - new Date(JSON.parse(b[1]).dueDate)
         }
       )
+      list_srt = list_srt.reverse()
     }
     //PRIORITY SORTING
     else
@@ -387,3 +426,18 @@ function showAlert(time,create_date ,id , todo) {
     window.location.reload()
   }, (time - create_date)*1000);
 } 
+
+
+
+// Search Functionality
+
+document.getElementById('search').addEventListener('input' , e =>{
+  if(e.target.value.trim().length > 0) {
+    const foundTasks = task_array.filter(task => JSON.parse(task[1]).task.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1);
+    document.getElementById('list').innerHTML = `<h4>TODOS</h4>`
+
+    load_task(foundTasks)
+    load_subtask(foundTasks)
+
+}
+})
